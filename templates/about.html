@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Aplikasi - Sistem Prediksi Kelayakan Kredit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .header-title {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .section-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .feature-card {
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .metric-card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="header-title display-4 fw-bold">
+                        <i class="fas fa-info-circle me-3"></i>
+                        Tentang Aplikasi
+                    </h1>
+                    <p class="header-title lead">Sistem Prediksi Kelayakan Kredit dengan Regresi Logistik</p>
+                </div>
+
+                <!-- Navigasi -->
+                <div class="text-center mb-4">
+                    <a href="/" class="btn btn-light btn-lg me-3">
+                        <i class="fas fa-home me-2"></i>Kembali ke Beranda
+                    </a>
+                </div>
+
+                <!-- Informasi Aplikasi -->
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="section-title">
+                            <i class="fas fa-brain me-2"></i>
+                            Tentang Sistem
+                        </h3>
+                        <p class="lead">
+                            Sistem Prediksi Kelayakan Kredit ini adalah aplikasi web yang menggunakan algoritma 
+                            <strong>Regresi Logistik</strong> untuk memprediksi risiko gagal bayar kartu kredit 
+                            berdasarkan data demografis dan riwayat pembayaran nasabah.
+                        </p>
+                        <p>
+                            Aplikasi ini dikembangkan sebagai bagian dari Tugas Akhir 3 (TA-03) untuk 
+                            memprediksi kemungkinan seorang nasabah akan gagal bayar pada bulan berikutnya 
+                            berdasarkan data historis mereka.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Fitur Utama -->
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="section-title">
+                            <i class="fas fa-star me-2"></i>
+                            Fitur Utama
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <div class="card feature-card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-chart-line fa-3x text-primary mb-3"></i>
+                                        <h5>Prediksi Real-time</h5>
+                                        <p class="text-muted">Prediksi instan risiko kredit dengan akurasi tinggi</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card feature-card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-shield-alt fa-3x text-success mb-3"></i>
+                                        <h5>Manajemen Risiko</h5>
+                                        <p class="text-muted">Membantu mengurangi kerugian akibat gagal bayar</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <div class="card feature-card h-100">
+                                    <div class="card-body text-center">
+                                        <i class="fas fa-user-friends fa-3x text-info mb-3"></i>
+                                        <h5>User Friendly</h5>
+                                        <p class="text-muted">Interface yang mudah digunakan untuk analis kredit</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Metrik Model -->
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="section-title">
+                            <i class="fas fa-chart-bar me-2"></i>
+                            Performa Model
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <div class="card metric-card">
+                                    <div class="card-body text-center">
+                                        <h3 class="display-4">71.04%</h3>
+                                        <p class="mb-0">AUC Score</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="card metric-card">
+                                    <div class="card-body text-center">
+                                        <h3 class="display-4">67%</h3>
+                                        <p class="mb-0">Accuracy</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="card metric-card">
+                                    <div class="card-body text-center">
+                                        <h3 class="display-4">63%</h3>
+                                        <p class="mb-0">Recall</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <div class="card metric-card">
+                                    <div class="card-body text-center">
+                                        <h3 class="display-4">36%</h3>
+                                        <p class="mb-0">Precision</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dataset Information -->
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="section-title">
+                            <i class="fas fa-database me-2"></i>
+                            Informasi Dataset
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Dataset UCI Credit Card</h5>
+                                <ul class="list-unstyled">
+                                    <li><strong>Total Records:</strong> 30,000 nasabah</li>
+                                    <li><strong>Features:</strong> 23 fitur</li>
+                                    <li><strong>Target:</strong> Default payment next month</li>
+                                    <li><strong>Class Distribution:</strong></li>
+                                    <li>&nbsp;&nbsp;• Non-default: 77.88%</li>
+                                    <li>&nbsp;&nbsp;• Default: 22.12%</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Fitur yang Digunakan</h5>
+                                <ul class="list-unstyled">
+                                    <li>• Informasi Demografis (Usia, Jenis Kelamin, dll)</li>
+                                    <li>• Limit Kredit</li>
+                                    <li>• Riwayat Pembayaran (6 bulan terakhir)</li>
+                                    <li>• Jumlah Tagihan (6 bulan terakhir)</li>
+                                    <li>• Jumlah Pembayaran (6 bulan terakhir)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teknologi yang Digunakan -->
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="section-title">
+                            <i class="fas fa-code me-2"></i>
+                            Teknologi yang Digunakan
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Machine Learning</h5>
+                                <ul>
+                                    <li>Python 3.10</li>
+                                    <li>Scikit-Learn (Logistic Regression)</li>
+                                    <li>Pandas & NumPy (Data Processing)</li>
+                                    <li>Imbalanced-Learn (SMOTE)</li>
+                                    <li>Matplotlib & Seaborn (Visualization)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Web Application</h5>
+                                <ul>
+                                    <li>Flask (Web Framework)</li>
+                                    <li>Bootstrap 5 (Frontend)</li>
+                                    <li>HTML5 & CSS3</li>
+                                    <li>JavaScript (AJAX)</li>
+                                    <li>Joblib (Model Persistence)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interpretasi Bisnis -->
+                <div class="card mb-4">
+                    <div class="card-body p-4">
+                        <h3 class="section-title">
+                            <i class="fas fa-briefcase me-2"></i>
+                            Interpretasi Bisnis
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>False Positives (31.5%)</h5>
+                                <p class="text-muted">
+                                    Nasabah yang diprediksi berisiko tapi sebenarnya tidak. 
+                                    Dampak: Kehilangan revenue dari nasabah yang baik.
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>False Negatives (37.2%)</h5>
+                                <p class="text-muted">
+                                    Nasabah yang diprediksi tidak berisiko tapi sebenarnya berisiko. 
+                                    Dampak: Potensi kerugian dari nasabah yang gagal bayar.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning mt-3">
+                            <strong>Catatan Penting:</strong> Dalam manajemen risiko kredit, 
+                            False Negatives biasanya lebih merugikan karena dapat menyebabkan 
+                            kerugian finansial yang signifikan.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <div class="text-center mt-5">
+                    <p class="header-title">
+                        <i class="fas fa-graduation-cap me-2"></i>
+                        Tugas Akhir 3 (TA-03) - Sistem Prediksi Kelayakan Kredit
+                    </p>
+                    <p class="header-title small">
+                        Menggunakan Regresi Logistik untuk Prediksi Risiko Gagal Bayar Kartu Kredit
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

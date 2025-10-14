@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Default of Credit Card Clients Dataset</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+            animation: backgroundMove 20s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes backgroundMove {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(-20px) translateY(-10px); }
+            50% { transform: translateX(20px) translateY(10px); }
+            75% { transform: translateX(-10px) translateY(20px); }
+        }
+        
+        /* Floating Particles */
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(1) { width: 10px; height: 10px; top: 20%; left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { width: 15px; height: 15px; top: 60%; left: 80%; animation-delay: 2s; }
+        .particle:nth-child(3) { width: 8px; height: 8px; top: 80%; left: 20%; animation-delay: 4s; }
+        .particle:nth-child(4) { width: 12px; height: 12px; top: 40%; left: 70%; animation-delay: 1s; }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header Styling */
+        .header-title {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            from { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 20px rgba(255,255,255,0.3); }
+            to { text-shadow: 2px 2px 4px rgba(0,0,0,0.3), 0 0 30px rgba(255,255,255,0.6); }
+        }
+        
+        /* Card Styling */
+        .card {
+            border: none;
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.1),
+                0 0 0 1px rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .card:hover::before {
+            left: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 25px 50px rgba(0,0,0,0.15),
+                0 0 0 1px rgba(255,255,255,0.2);
+        }
+        
+        /* Form Controls */
+        .form-control, .form-select {
+            border-radius: 15px;
+            border: 2px solid transparent;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+        
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 
+                0 0 0 0.2rem rgba(102, 126, 234, 0.25),
+                0 0 20px rgba(102, 126, 234, 0.1);
+            background: rgba(255,255,255,1);
+            transform: translateY(-2px);
+        }
+        
+        .form-control:hover, .form-select:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        /* Button Styling */
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2, #f093fb);
+            background-size: 200% 200%;
+            border: none;
+            border-radius: 15px;
+            padding: 15px 40px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+            animation: gradientShift 2s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Result Cards */
+        .result-card {
+            border-radius: 25px;
+            border: none;
+            box-shadow: 
+                0 20px 40px rgba(0,0,0,0.1),
+                0 0 0 1px rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .result-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .result-card:hover::after {
+            opacity: 1;
+        }
+        
+        .risk-high {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24, #ff4757);
+            color: white;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .risk-medium {
+            background: linear-gradient(135deg, #feca57, #ff9ff3, #ffa502);
+            color: white;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .risk-low {
+            background: linear-gradient(135deg, #48dbfb, #0abde3, #2ed573);
+            color: white;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+        
+        /* Section Titles */
+        .section-title {
+            color: #2c3e50;
+            font-weight: 700;
+            margin-bottom: 25px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        
+        /* Form Section */
+        .form-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+        
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            border-radius: 25px 25px 0 0;
+        }
+        
+        /* Progress Bar */
+        .progress {
+            height: 25px;
+            border-radius: 15px;
+            background: rgba(255,255,255,0.2);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-bar {
+            border-radius: 15px;
+            transition: width 1s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(45deg, #764ba2, #f093fb);
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Count Up Animation */
+        @keyframes countUp {
+            from { 
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            to { 
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        /* Card Entrance Animation */
+        .card {
+            animation: slideInUp 0.6s ease-out;
+        }
+        
+        @keyframes slideInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Form Group Animation */
+        .mb-3 {
+            animation: fadeInLeft 0.8s ease-out;
+        }
+        
+        .mb-3:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+        
+        .mb-3:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                transform: translateX(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-section {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            .card {
+                margin: 10px;
+            }
+            
+            .btn-primary {
+                padding: 12px 30px;
+                font-size: 14px;
+            }
+        }
+        
+        /* Hover Effects for Form Groups */
+        .mb-3:hover .form-label {
+            color: #667eea;
+            transition: color 0.3s ease;
+        }
+        
+        /* Custom Input Focus Effects */
+        .form-control:focus + .form-label,
+        .form-select:focus + .form-label {
+            color: #667eea;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <!-- Header -->
+                <div class="text-center mb-5">
+                    <h1 class="header-title display-4 fw-bold">
+                        <i class="fas fa-credit-card me-3"></i>
+                        Default of Credit Card Clients Prediction System
+                    </h1>
+                    <p class="header-title lead">Default of Credit Card Clients Prediction using Logistic Regression</p>
+                </div>
+
+                <!-- Form Input -->
+                <div class="card">
+                    <div class="card-body p-0">
+                        <div class="form-section">
+                            <h3 class="section-title">
+                                <i class="fas fa-user-edit me-2"></i>
+                                Customer Data
+                            </h3>
+                            
+                            <form id="creditForm">
+                                <div class="row">
+                                    <!-- Demographic Information -->
+                                    <div class="col-md-6">
+                                        <h5 class="text-primary mb-3">Demographic Information</h5>
+                                        
+                                        <div class="mb-3">
+                                            <label for="limit_bal" class="form-label">Credit Limit (NT$)</label>
+                                            <select class="form-select" id="limit_bal" name="limit_bal" required onchange="toggleCustomInput('limit_bal', 'limit_bal_custom')">
+                                                <option value="">Select Credit Limit</option>
+                                                <option value="10000">10,000 NT$</option>
+                                                <option value="16000">16,000 NT$</option>
+                                                <option value="20000">20,000 NT$</option>
+                                                <option value="30000">30,000 NT$</option>
+                                                <option value="40000">40,000 NT$</option>
+                                                <option value="50000">50,000 NT$</option>
+                                                <option value="60000">60,000 NT$</option>
+                                                <option value="70000">70,000 NT$</option>
+                                                <option value="80000">80,000 NT$</option>
+                                                <option value="90000">90,000 NT$</option>
+                                                <option value="100000">100,000 NT$</option>
+                                                <option value="110000">110,000 NT$</option>
+                                                <option value="120000">120,000 NT$</option>
+                                                <option value="130000">130,000 NT$</option>
+                                                <option value="140000">140,000 NT$</option>
+                                                <option value="150000">150,000 NT$</option>
+                                                <option value="160000">160,000 NT$</option>
+                                                <option value="170000">170,000 NT$</option>
+                                                <option value="180000">180,000 NT$</option>
+                                                <option value="190000">190,000 NT$</option>
+                                                <option value="200000">200,000 NT$</option>
+                                                <option value="250000">250,000 NT$</option>
+                                                <option value="300000">300,000 NT$</option>
+                                                <option value="350000">350,000 NT$</option>
+                                                <option value="400000">400,000 NT$</option>
+                                                <option value="450000">450,000 NT$</option>
+                                                <option value="500000">500,000 NT$</option>
+                                                <option value="600000">600,000 NT$</option>
+                                                <option value="700000">700,000 NT$</option>
+                                                <option value="800000">800,000 NT$</option>
+                                                <option value="1000000">1,000,000 NT$</option>
+                                                <option value="custom">Custom Amount...</option>
+                                            </select>
+                                            <input type="number" class="form-control mt-2" id="limit_bal_custom" name="limit_bal_custom" 
+                                                   placeholder="Enter custom amount" style="display: none;">
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="sex" class="form-label">Sex (1=Male, 2=Female)</label>
+                                            <select class="form-select" id="sex" name="sex" required>
+                                                <option value="">Select Sex</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="education" class="form-label">Education (0,5,6=Unknown, 1=Graduate, 2=University, 3=High School, 4=Others)</label>
+                                            <select class="form-select" id="education" name="education" required>
+                                                <option value="">Select Education</option>
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="marriage" class="form-label">Marriage (0=Unknown, 1=Married, 2=Single, 3=Others)</label>
+                                            <select class="form-select" id="marriage" name="marriage" required>
+                                                <option value="">Select Status</option>
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="age" class="form-label">Age</label>
+                                            <select class="form-select" id="age" name="age" required>
+                                                <option value="">Select Age</option>
+                                                <option value="21">21 years</option>
+                                                <option value="22">22 years</option>
+                                                <option value="23">23 years</option>
+                                                <option value="24">24 years</option>
+                                                <option value="25">25 years</option>
+                                                <option value="26">26 years</option>
+                                                <option value="27">27 years</option>
+                                                <option value="28">28 years</option>
+                                                <option value="29">29 years</option>
+                                                <option value="30">30 years</option>
+                                                <option value="31">31 years</option>
+                                                <option value="32">32 years</option>
+                                                <option value="33">33 years</option>
+                                                <option value="34">34 years</option>
+                                                <option value="35">35 years</option>
+                                                <option value="36">36 years</option>
+                                                <option value="37">37 years</option>
+                                                <option value="38">38 years</option>
+                                                <option value="39">39 years</option>
+                                                <option value="40">40 years</option>
+                                                <option value="41">41 years</option>
+                                                <option value="42">42 years</option>
+                                                <option value="43">43 years</option>
+                                                <option value="44">44 years</option>
+                                                <option value="45">45 years</option>
+                                                <option value="46">46 years</option>
+                                                <option value="47">47 years</option>
+                                                <option value="48">48 years</option>
+                                                <option value="49">49 years</option>
+                                                <option value="50">50 years</option>
+                                                <option value="51">51 years</option>
+                                                <option value="52">52 years</option>
+                                                <option value="53">53 years</option>
+                                                <option value="54">54 years</option>
+                                                <option value="55">55 years</option>
+                                                <option value="56">56 years</option>
+                                                <option value="57">57 years</option>
+                                                <option value="58">58 years</option>
+                                                <option value="59">59 years</option>
+                                                <option value="60">60 years</option>
+                                                <option value="61">61 years</option>
+                                                <option value="62">62 years</option>
+                                                <option value="63">63 years</option>
+                                                <option value="64">64 years</option>
+                                                <option value="65">65 years</option>
+                                                <option value="66">66 years</option>
+                                                <option value="67">67 years</option>
+                                                <option value="68">68 years</option>
+                                                <option value="69">69 years</option>
+                                                <option value="70">70 years</option>
+                                                <option value="71">71 years</option>
+                                                <option value="72">72 years</option>
+                                                <option value="73">73 years</option>
+                                                <option value="74">74 years</option>
+                                                <option value="75">75 years</option>
+                                                <option value="76">76 years</option>
+                                                <option value="77">77 years</option>
+                                                <option value="78">78 years</option>
+                                                <option value="79">79 years</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Payment History -->
+                                    <div class="col-md-6">
+                                        <h5 class="text-primary mb-3">Payment History (Last 6 Months)</h5>
+                                        
+                                        <div class="mb-3">
+                                            <label for="pay_0" class="form-label">PAY_0 (Current Month) (-2=No consumption, -1=Pay duly, 0=Revolving, 1-8=Delay months)</label>
+                                            <select class="form-select" id="pay_0" name="pay_0" required>
+                                                <option value="">Select Status</option>
+                                                <option value="-2">-2</option>
+                                                <option value="-1">-1</option>
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="pay_2" class="form-label">PAY_2 (2 Months Ago) (-2=No consumption, -1=Pay duly, 0=Revolving, 1-8=Delay months)</label>
+                                            <select class="form-select" id="pay_2" name="pay_2" required>
+                                                <option value="">Select Status</option>
+                                                <option value="-2">-2</option>
+                                                <option value="-1">-1</option>
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="pay_3" class="form-label">PAY_3 (3 Months Ago) (-2=No consumption, -1=Pay duly, 0=Revolving, 1-8=Delay months)</label>
+                                            <select class="form-select" id="pay_3" name="pay_3" required>
+                                                <option value="">Select Status</option>
+                                                <option value="-2">-2</option>
+                                                <option value="-1">-1</option>
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="pay_4" class="form-label">PAY_4 (4 Months Ago) (-2=No consumption, -1=Pay duly, 0=Revolving, 1-8=Delay months)</label>
+                                            <select class="form-select" id="pay_4" name="pay_4" required>
+                                                <option value="">Select Status</option>
+                                                <option value="-2">-2</option>
+                                                <option value="-1">-1</option>
+                                                <option value="0">0</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="pay_5" class="form-label">PAY_5 (5 Months Ago) (-2=No consumption, -1=Pay duly, 0=Revolving, 2-8=Delay months)</label>
+                                            <select class="form-select" id="pay_5" name="pay_5" required>
+                                                <option value="">Select Status</option>
+                                                <option value="-2">-2</option>
+                                                <option value="-1">-1</option>
+                                                <option value="0">0</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label for="pay_6" class="form-label">PAY_6 (6 Months Ago) (-2=No consumption, -1=Pay duly, 0=Revolving, 2-8=Delay months)</label>
+                                            <select class="form-select" id="pay_6" name="pay_6" required>
+                                                <option value="">Select Status</option>
+                                                <option value="-2">-2</option>
+                                                <option value="-1">-1</option>
+                                                <option value="0">0</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
+                                                <option value="7">7</option>
+                                                <option value="8">8</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Bill Amount and Payment Amount Information -->
+                                <div class="row mt-4">
+                                    <div class="col-md-6">
+                                        <h5 class="text-primary mb-3">Bill Amount (NT$)</h5>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="bill_amt1" class="form-label">BILL_AMT1 (Current Month)</label>
+                                                <select class="form-select" id="bill_amt1" name="bill_amt1" required onchange="toggleCustomInput('bill_amt1', 'bill_amt1_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="4000">4,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="bill_amt1_custom" name="bill_amt1_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="bill_amt2" class="form-label">BILL_AMT2 (1 Month Ago)</label>
+                                                <select class="form-select" id="bill_amt2" name="bill_amt2" required onchange="toggleCustomInput('bill_amt2', 'bill_amt2_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="4000">4,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="bill_amt2_custom" name="bill_amt2_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="bill_amt3" class="form-label">BILL_AMT3 (2 Months Ago)</label>
+                                                <select class="form-select" id="bill_amt3" name="bill_amt3" required onchange="toggleCustomInput('bill_amt3', 'bill_amt3_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="4000">4,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="bill_amt3_custom" name="bill_amt3_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="bill_amt4" class="form-label">BILL_AMT4 (3 Months Ago)</label>
+                                                <select class="form-select" id="bill_amt4" name="bill_amt4" required onchange="toggleCustomInput('bill_amt4', 'bill_amt4_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="4000">4,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="bill_amt4_custom" name="bill_amt4_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="bill_amt5" class="form-label">BILL_AMT5 (4 Months Ago)</label>
+                                                <select class="form-select" id="bill_amt5" name="bill_amt5" required onchange="toggleCustomInput('bill_amt5', 'bill_amt5_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="4000">4,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="bill_amt5_custom" name="bill_amt5_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="bill_amt6" class="form-label">BILL_AMT6 (5 Months Ago)</label>
+                                                <select class="form-select" id="bill_amt6" name="bill_amt6" required onchange="toggleCustomInput('bill_amt6', 'bill_amt6_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="4000">4,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="bill_amt6_custom" name="bill_amt6_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <h5 class="text-primary mb-3">Payment Amount (NT$)</h5>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label for="pay_amt1" class="form-label">PAY_AMT1 (Current Month)</label>
+                                                <select class="form-select" id="pay_amt1" name="pay_amt1" required onchange="toggleCustomInput('pay_amt1', 'pay_amt1_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="500">500 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="1500">1,500 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="pay_amt1_custom" name="pay_amt1_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="pay_amt2" class="form-label">PAY_AMT2 (1 Month Ago)</label>
+                                                <select class="form-select" id="pay_amt2" name="pay_amt2" required onchange="toggleCustomInput('pay_amt2', 'pay_amt2_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="500">500 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="1500">1,500 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="pay_amt2_custom" name="pay_amt2_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="pay_amt3" class="form-label">PAY_AMT3 (2 Months Ago)</label>
+                                                <select class="form-select" id="pay_amt3" name="pay_amt3" required onchange="toggleCustomInput('pay_amt3', 'pay_amt3_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="500">500 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="1500">1,500 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="pay_amt3_custom" name="pay_amt3_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="pay_amt4" class="form-label">PAY_AMT4 (3 Months Ago)</label>
+                                                <select class="form-select" id="pay_amt4" name="pay_amt4" required onchange="toggleCustomInput('pay_amt4', 'pay_amt4_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="500">500 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="1500">1,500 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="pay_amt4_custom" name="pay_amt4_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="pay_amt5" class="form-label">PAY_AMT5 (4 Months Ago)</label>
+                                                <select class="form-select" id="pay_amt5" name="pay_amt5" required onchange="toggleCustomInput('pay_amt5', 'pay_amt5_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="500">500 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="1500">1,500 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="pay_amt5_custom" name="pay_amt5_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                                <label for="pay_amt6" class="form-label">PAY_AMT6 (5 Months Ago)</label>
+                                                <select class="form-select" id="pay_amt6" name="pay_amt6" required onchange="toggleCustomInput('pay_amt6', 'pay_amt6_custom')">
+                                                    <option value="">Select Amount</option>
+                                                    <option value="0">0 NT$</option>
+                                                    <option value="500">500 NT$</option>
+                                                    <option value="1000">1,000 NT$</option>
+                                                    <option value="1500">1,500 NT$</option>
+                                                    <option value="2000">2,000 NT$</option>
+                                                    <option value="3000">3,000 NT$</option>
+                                                    <option value="5000">5,000 NT$</option>
+                                                    <option value="10000">10,000 NT$</option>
+                                                    <option value="15000">15,000 NT$</option>
+                                                    <option value="20000">20,000 NT$</option>
+                                                    <option value="25000">25,000 NT$</option>
+                                                    <option value="30000">30,000 NT$</option>
+                                                    <option value="40000">40,000 NT$</option>
+                                                    <option value="50000">50,000 NT$</option>
+                                                    <option value="75000">75,000 NT$</option>
+                                                    <option value="100000">100,000 NT$</option>
+                                                    <option value="150000">150,000 NT$</option>
+                                                    <option value="200000">200,000 NT$</option>
+                                                    <option value="300000">300,000 NT$</option>
+                                                    <option value="500000">500,000 NT$</option>
+                                                    <option value="750000">750,000 NT$</option>
+                                                    <option value="1000000">1,000,000 NT$</option>
+                                                                                                    <option value="custom">Custom Amount...</option>
+                                                </select>
+                                                <input type="number" class="form-control mt-2" id="pay_amt6_custom" name="pay_amt6_custom" 
+                                                       placeholder="Enter custom amount" style="display: none;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Submit Button -->
+                                <div class="text-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg">
+                                        <i class="fas fa-calculator me-2"></i>
+                                        Predict Default of Credit Card Clients
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Prediction Results -->
+                <div id="resultSection" class="card mt-4" style="display: none;">
+                    <div class="card-body p-4">
+                        <h3 class="section-title">
+                            <i class="fas fa-chart-line me-2"></i>
+                            Prediction Results
+                        </h3>
+                        <div id="predictionResult"></div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div id="chartsSection" class="card mt-4" style="display: none;">
+                    <div class="card-body p-4">
+                        <h3 class="section-title">
+                            <i class="fas fa-chart-area me-2"></i>
+                            Visualisasi Grafik
+                        </h3>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <h5>Confusion Matrix</h5>
+                                <img id="cmImg" src="" class="img-fluid rounded shadow">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>Distribusi Umur</h5>
+                                <img id="ageImg" src="" class="img-fluid rounded shadow">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>Distribusi Limit Kredit</h5>
+                                <img id="limitImg" src="" class="img-fluid rounded shadow">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>Distribusi Target</h5>
+                                <img id="targetImg" src="" class="img-fluid rounded shadow">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>LIMIT_BAL vs Default</h5>
+                                <img id="limitbalVsImg" src="" class="img-fluid rounded shadow">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>SEX vs Default</h5>
+                                <img id="sexVsImg" src="" class="img-fluid rounded shadow">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>EDUCATION vs Default</h5>
+                                <img id="eduVsImg" src="" class="img-fluid rounded shadow">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <h5>MARRIAGE vs Default</h5>
+                                <img id="marriageVsImg" src="" class="img-fluid rounded shadow">
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <h5>Correlation Heatmap</h5>
+                                <img id="corrImg" src="" class="img-fluid rounded shadow">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Batch Prediction -->
+                <div class="card mt-4">
+                    <div class="card-body p-4">
+                        <h3 class="section-title">
+                            <i class="fas fa-file-upload me-2"></i>
+                            Batch Prediction dari CSV
+                        </h3>
+                        <form id="batchForm">
+                            <div class="row align-items-end">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Upload CSV (opsional)</label>
+                                    <input class="form-control" type="file" id="csvFile" name="file" accept=".csv">
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <div class="form-check mt-4">
+                                        <input class="form-check-input" type="checkbox" id="useDefault" name="use_default" value="1">
+                                        <label class="form-check-label" for="useDefault">Gunakan dataset bawaan</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3 text-end">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-play me-2"></i>Prediksi Batch
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="batchResult" class="mt-3" style="display:none;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to toggle custom input fields
+        function toggleCustomInput(selectId, customInputId) {
+            const select = document.getElementById(selectId);
+            const customInput = document.getElementById(customInputId);
+            
+            if (select.value === 'custom') {
+                customInput.style.display = 'block';
+                customInput.required = true;
+                select.required = false;
+            } else {
+                customInput.style.display = 'none';
+                customInput.required = false;
+                select.required = true;
+            }
+        }
+
+        document.getElementById('creditForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Handle custom inputs - use custom value if available, otherwise use select value
+            const customFields = ['limit_bal', 'bill_amt1', 'bill_amt2', 'bill_amt3', 'bill_amt4', 'bill_amt5', 'bill_amt6', 
+                                 'pay_amt1', 'pay_amt2', 'pay_amt3', 'pay_amt4', 'pay_amt5', 'pay_amt6'];
+            
+            customFields.forEach(field => {
+                const customField = field + '_custom';
+                if (data[customField] && data[customField] !== '') {
+                    data[field] = data[customField];
+                }
+                // Remove custom fields from data
+                delete data[customField];
+            });
+            
+            // Show loading with enhanced animation
+            const submitBtn = this.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<div class="loading me-2"></div>Processing...';
+            submitBtn.disabled = true;
+            submitBtn.style.animation = 'gradientShift 1s ease infinite';
+            
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    displayResult(result);
+                } else {
+                    alert('Error: ' + result.error);
+                }
+            } catch (error) {
+                alert('An error occurred: ' + error.message);
+            } finally {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+        
+        function displayResult(result) {
+            const resultSection = document.getElementById('resultSection');
+            const resultDiv = document.getElementById('predictionResult');
+            const chartsSection = document.getElementById('chartsSection');
+            
+            const riskClass = result.color === 'danger' ? 'risk-high' : 
+                            result.color === 'warning' ? 'risk-medium' : 'risk-low';
+            
+            // Add entrance animation
+            resultSection.style.opacity = '0';
+            resultSection.style.transform = 'translateY(50px)';
+            resultSection.style.display = 'block';
+            
+            // Animate entrance
+            setTimeout(() => {
+                resultSection.style.transition = 'all 0.8s ease';
+                resultSection.style.opacity = '1';
+                resultSection.style.transform = 'translateY(0)';
+            }, 100);
+            
+            resultDiv.innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card result-card ${riskClass}" style="animation-delay: 0.2s;">
+                            <div class="card-body text-center p-4">
+                                <h4 class="card-title">
+                                    <i class="fas fa-${result.prediction === 1 ? 'exclamation-triangle' : 'check-circle'} me-2"></i>
+                                    ${result.risk_level}
+                                </h4>
+                                <h2 class="display-4 fw-bold" style="animation: countUp 2s ease-out;">${result.risk_probability}%</h2>
+                                <p class="mb-0">Default Probability</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card" style="animation-delay: 0.4s;">
+                            <div class="card-body">
+                                <h5 class="card-title">Analysis Details</h5>
+                                <ul class="list-unstyled">
+                                    <li><strong>Risk Status:</strong> ${result.interpretation}</li>
+                                    <li><strong>Default Probability:</strong> ${result.risk_probability}%</li>
+                                    <li><strong>Non-Default Probability:</strong> ${result.non_default_prob}%</li>
+                                </ul>
+                                <div class="mt-3">
+                                    <div class="progress" style="height: 25px;">
+                                        <div class="progress-bar ${result.color === 'danger' ? 'bg-danger' : result.color === 'warning' ? 'bg-warning' : 'bg-success'}" 
+                                             role="progressbar" style="width: 0%" 
+                                             aria-valuenow="${result.risk_probability}" aria-valuemin="0" aria-valuemax="100">
+                                            <span style="font-weight: 600;">${result.risk_probability}%</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Animate progress bar
+            setTimeout(() => {
+                const progressBar = resultDiv.querySelector('.progress-bar');
+                progressBar.style.width = `${result.risk_probability}%`;
+            }, 500);
+            
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+
+            // Tampilkan grafik dengan cache-busting agar tidak ter-cache
+            const ts = Date.now();
+            document.getElementById('cmImg').src = `/static/confusion_matrix.png?t=${ts}`;
+            document.getElementById('ageImg').src = `/static/age_distribution.png?t=${ts}`;
+            document.getElementById('limitImg').src = `/static/limitbal_distribution.png?t=${ts}`;
+            document.getElementById('targetImg').src = `/static/target_distribution.png?t=${ts}`;
+            document.getElementById('limitbalVsImg').src = `/static/limitbal_vs_default.png?t=${ts}`;
+            document.getElementById('sexVsImg').src = `/static/sex_vs_default.png?t=${ts}`;
+            document.getElementById('eduVsImg').src = `/static/education_vs_default.png?t=${ts}`;
+            document.getElementById('marriageVsImg').src = `/static/marriage_vs_default.png?t=${ts}`;
+            document.getElementById('corrImg').src = `/static/correlation_heatmap.png?t=${ts}`;
+
+            // Animasi dan tampilkan charts section
+            chartsSection.style.opacity = '0';
+            chartsSection.style.transform = 'translateY(50px)';
+            chartsSection.style.display = 'block';
+            setTimeout(() => {
+                chartsSection.style.transition = 'all 0.8s ease';
+                chartsSection.style.opacity = '1';
+                chartsSection.style.transform = 'translateY(0)';
+            }, 100);
+        }
+
+        // Batch prediction submit
+        document.getElementById('batchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const formEl = e.currentTarget;
+            const formData = new FormData(formEl);
+            const useDefault = document.getElementById('useDefault').checked;
+            if (useDefault) formData.set('use_default', '1');
+
+            const btn = formEl.querySelector('button[type="submit"]');
+            const original = btn.innerHTML;
+            btn.disabled = true; btn.innerHTML = '<div class="loading me-2"></div>Processing...';
+            try {
+                const resp = await fetch('/predict_batch', { method: 'POST', body: formData });
+                const result = await resp.json();
+                const out = document.getElementById('batchResult');
+                out.style.display = 'block';
+                if (!resp.ok) {
+                    out.innerHTML = `<div class="alert alert-danger">${result.error || 'Terjadi kesalahan.'}</div>`;
+                } else {
+                    out.innerHTML = `<div class="alert alert-success">${result.message} - <a href="${result.download_url}" target="_blank">Download hasil</a></div>`;
+                }
+            } catch (err) {
+                const out = document.getElementById('batchResult');
+                out.style.display = 'block';
+                out.innerHTML = `<div class="alert alert-danger">Gagal mengirim: ${err.message}</div>`;
+            } finally {
+                btn.disabled = false; btn.innerHTML = original;
+            }
+        });
+    </script>
+</body>
+</html>
+

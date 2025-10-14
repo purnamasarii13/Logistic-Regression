@@ -1,0 +1,13 @@
+pandas
+numpy
+matplotlib
+seaborn
+scikit-learn
+imbalanced-learn
+joblib
+flask
+opencv-python
+joblib
+pillow
+pandas
+gunicorn
